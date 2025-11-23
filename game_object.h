@@ -19,16 +19,26 @@ class GameObject
     sf::Sprite sprite;
     float speed;
     bool dead;
+    sf::Texture texture;
 
 };
 
 class Enemy : public GameObject
 {
     public:
+    Enemy(sf::Vector2f init_pos);
     void handle(sf::Event event) override;
     void update(sf::Time delta, std::vector<GameObject*>& new_objects) override;
     void render(sf::RenderWindow& window) override;
+    void direction(std::string dir);
+    
     //bool collides() override;
+    private:
+    float speed;
+    float timer;
+    float dir;
+    
+    
 };
 class Player: public GameObject
 {
@@ -40,7 +50,8 @@ class Player: public GameObject
 
     private:
     float speed;
-    sf::Texture texture;
+   
+
 
 };
 class Asteroid: public GameObject
@@ -49,6 +60,8 @@ class Asteroid: public GameObject
     void handle(sf::Event event) override;
     void update(sf::Time delta, std::vector<GameObject*>& new_objects) override;
     void render(sf::RenderWindow& window) override;
+    Asteroid(sf::Vector2f init_pos, sf::Texture init_texture);
+
     private:
     float proj_speed;
     

@@ -1,7 +1,7 @@
 CC = g++
 CCFLAGS = -std=c++17 -Wall -Wextra
 LDFLAGS = -lsfml-window -lsfml-graphics -lsfml-system
-OBJS = game_main.o state.o game_object.o player.o projectile.o
+OBJS = game_main.o state.o game_object.o player.o projectile.o enemy.o
 
 game: $(OBJS)
 	$(CC) $^ $(LDFLAGS) -o $@

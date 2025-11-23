@@ -24,6 +24,7 @@ class GameState : public State
     private:
     std::vector<GameObject*> gameobjects;
     std::vector<GameObject*> new_objects;
+    std::vector<GameObject*> projectiles;
     GameObject* player;
 };
 

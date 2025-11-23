@@ -1,7 +1,7 @@
 #include "game_object.h"
 
 GameObject::GameObject(sf::Vector2f init_pos)
-    :pos{init_pos}, dead{false}
+    :pos{init_pos}, dead{false}, sprite{}
 {}
 
 bool GameObject::is_dead() const
