@@ -3,7 +3,7 @@
 #include <iostream>
 
 Enemy::Enemy(sf::Vector2f init_pos)
-    :GameObject{init_pos}, speed{10000}, timer{0.f}, dir{-1}
+    :GameObject{init_pos}, speed{300}, timer{0.f}, dir{-1}
     {
         if (!texture.loadFromFile("assets/yellow.png")) {
             std::cerr << "Failed to load texture\n";

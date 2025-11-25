@@ -10,24 +10,26 @@ GameState::GameState()
 
     for(int i{1}; i <= enemy_row; i++)
     {
-        gameobjects.push_back(new Enemy({(screen_size.x-20)*i/8, screen_size.y/3-100}));
+        gameobjects.push_back(new Enemy({(screen_sizef.x-20)*i/8, (screen_sizef.y)/3-500}));
     }
     for(int i{1}; i <= enemy_row; i++)
     {
-        gameobjects.push_back(new Enemy({(screen_size.x-20)*i/8, screen_size.y/3-200}));
+        gameobjects.push_back(new Enemy({(screen_sizef.x-20)*i/8, screen_sizef.y/3-400}));
     }
     for(int i{1}; i <= enemy_row; i++)
     {
-        gameobjects.push_back(new Enemy({(screen_size.x-20)*i/8, screen_size.y/3-300}));
+        gameobjects.push_back(new Enemy({(screen_sizef.x-20)*i/8, screen_sizef.y/3-300}));
     }
     for(int i{1}; i <= enemy_row; i++)
     {
-        gameobjects.push_back(new Enemy({(screen_size.x-20)*i/8, screen_size.y/3-400}));
+        gameobjects.push_back(new Enemy({(screen_sizef.x-20)*i/8, screen_sizef.y/3-200}));
     }
     for(int i{1}; i <= enemy_row; i++)
     {
-        gameobjects.push_back(new Enemy({(screen_size.x-20)*i/8, screen_size.y/3-500}));
+        gameobjects.push_back(new Enemy({(screen_sizef.x-20)*i/8, screen_sizef.y/3-100}));
     }
+
+
    
    
    
@@ -87,21 +89,38 @@ void GameState::update(sf::Time delta)
 {
     std::vector<GameObject*> new_objects{};
     player -> update(delta, new_objects);
-    for (auto object : projectiles)
+
+    
+    for (auto enemy : gameobjects)
     {
-        object->update(delta, new_objects);
+        
+        //enemy -> collides(object);
+        enemy->update(delta, new_objects);
 
     }
+    
+   for (auto* object : projectiles)
+    {
+        object->update(delta, new_objects);    
+        for (auto* enemy : gameobjects)
+        {
+            object ->collides(enemy);
+            //enemy -> collides(object);
+
+        }  
+        
+
+    }
+    
+    
+    
+
+    
     //for (auto object: new_objects)
     //{
     //    object -> update(delta, new_objects);
     //}
-    for (auto enemy: gameobjects)
-    {
-        
-        enemy -> update(delta, new_objects);
-        
-    }
+
 
     // TODO: Kolla kollisioner
     // for ()
@@ -109,9 +128,19 @@ void GameState::update(sf::Time delta)
     // }
 
     // Döda objekt, loopar baklänges för att undvika index-problem
-    for (unsigned int i = projectiles.size(); i-- > 0;)
+  
+
+    for (unsigned int i = gameobjects.size(); i-- > 0;)
     {
-        if (projectiles[i]->is_dead() ||(projectiles[i] -> get_pos().y <0))
+        if (gameobjects[i]-> is_dead())
+        {
+            delete gameobjects[i];
+            gameobjects.erase(gameobjects.begin() + i);
+        }
+    }
+      for (unsigned int i = projectiles.size(); i-- >  0;)
+    {
+        if (projectiles[i]->is_dead() || projectiles[i]->get_pos().y < 0)
         {
             delete projectiles[i];
             projectiles.erase(projectiles.begin() + i);

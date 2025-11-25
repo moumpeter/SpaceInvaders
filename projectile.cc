@@ -3,11 +3,15 @@
 #include <iostream>
 
 Projectile::Projectile(sf::Vector2f init_pos, std::string init_dir)
-    : GameObject{init_pos}, proj_speed{1000.f}, proj_size{5,15}, dir{init_dir}
+    : GameObject{init_pos}, proj_speed{175.f}, proj_size{0.025f, 0.075f}, dir{init_dir}
     {
-        shape.setFillColor(sf::Color::White);
-        shape.setSize({5,15});
-        shape.setOrigin(proj_size.x/2, proj_size.y);
+        if(!texture.loadFromFile("assets/Turquoise.png")) 
+        {
+            std::cerr << "Failed to load texture\n";
+        }
+        sprite.setScale(proj_size);
+        sprite.setTexture(texture);
+        sprite.setPosition(pos);
     }
 void Projectile::handle(sf::Event event)
 {
@@ -28,10 +32,10 @@ void Projectile::update(sf::Time delta, std::vector<GameObject*>& new_objects)
     }
     
     pos += move*distance;
-    shape.setPosition(pos);
+    sprite.setPosition(pos);
 }
 
 void Projectile::render(sf::RenderWindow& window)
 {
-    window.draw(shape);
+    window.draw(sprite);
 }

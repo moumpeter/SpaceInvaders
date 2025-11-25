@@ -3,7 +3,7 @@
 #include <iostream>
 
 Player::Player(sf::Vector2f init_pos)
-    : GameObject{init_pos}, speed{1000.f}
+    : GameObject{init_pos}, speed{175.f}
     {
         if (!texture.loadFromFile("assets/player.png")) {
             std::cerr << "Failed to load texture\n";

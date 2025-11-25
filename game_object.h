@@ -13,6 +13,9 @@ class GameObject
     bool is_dead() const;
     //virtual bool colllides() = 0;
     sf::Vector2f get_pos();
+    void collides(GameObject* game_object);
+    sf::FloatRect get_bounds(); 
+    void update_dead(bool var);
 
     protected:
     sf::Vector2f pos;
@@ -31,6 +34,7 @@ class Enemy : public GameObject
     void update(sf::Time delta, std::vector<GameObject*>& new_objects) override;
     void render(sf::RenderWindow& window) override;
     void direction(std::string dir);
+    sf::FloatRect get_bounds();
     
     //bool collides() override;
     private:
@@ -76,7 +80,6 @@ class Projectile: public GameObject
     void render(sf::RenderWindow& window) override;
     private:
     std::string dir;
-    sf::RectangleShape shape;
     float proj_speed;
-    sf::Vector2i proj_size;
+    sf::Vector2f proj_size;
 };
